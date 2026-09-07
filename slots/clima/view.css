@@ -1,0 +1,98 @@
+.clima {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0.6rem;
+  justify-content: center;
+}
+.clima-empty {
+  color: var(--muted, #8b95a3);
+  align-self: center;
+  margin: auto;
+}
+.clima-top {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.clima-emoji {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 1;
+}
+.clima-main {
+  flex: 1;
+  min-width: 0;
+}
+.clima-temp {
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.clima-temp span {
+  font-size: 0.4em;
+  font-weight: 400;
+  color: var(--muted, #8b95a3);
+  margin-left: 2px;
+}
+.clima-cond {
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+  color: var(--accent, #5ac8fa);
+}
+.clima-loc {
+  font-size: 0.85rem;
+  color: var(--muted, #8b95a3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.clima-side {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--muted, #8b95a3);
+  line-height: 1.6;
+}
+.clima-side b {
+  color: var(--fg, #e8ecf1);
+  font-weight: 600;
+}
+
+.spark {
+  width: 100%;
+  height: auto;
+  max-height: 90px;
+  display: block;
+}
+.spark-line {
+  fill: none;
+  stroke: var(--accent, #5ac8fa);
+  stroke-width: 2;
+}
+.spark-area {
+  fill: color-mix(in srgb, var(--accent, #5ac8fa) 14%, transparent);
+  stroke: none;
+}
+.spark-nowline {
+  stroke: var(--muted, #8b95a3);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+  opacity: 0.6;
+}
+.spark-now {
+  fill: var(--fg, #e8ecf1);
+  stroke: var(--accent, #5ac8fa);
+  stroke-width: 2;
+}
+.spark-tick {
+  fill: var(--muted, #8b95a3);
+  font-size: 8px;
+  text-anchor: middle;
+}
+
+.clima-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--muted, #8b95a3);
+}

@@ -1,0 +1,6 @@
+{
+  "id": "energia",
+  "title": "Energia",
+  "span": 1,
+  "refreshInterval": "2m"
+}

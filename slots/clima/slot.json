@@ -1,0 +1,6 @@
+{
+  "id": "clima",
+  "title": "Clima",
+  "span": 2,
+  "refreshInterval": "15m"
+}

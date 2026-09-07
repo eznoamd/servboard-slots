@@ -1,0 +1,35 @@
+.rlg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.15rem;
+  text-align: center;
+}
+.rlg-time {
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.rlg-dow {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: var(--accent, #5ac8fa);
+  margin-top: 0.3rem;
+}
+.rlg-daynum {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 300;
+  line-height: 1.05;
+}
+.rlg-md {
+  font-size: clamp(0.9rem, 1.6vw, 1.25rem);
+  color: var(--muted, #8b95a3);
+}
+.rlg-meta {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--muted, #8b95a3);
+  opacity: 0.8;
+}
