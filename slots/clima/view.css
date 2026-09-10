@@ -1,8 +1,12 @@
 .clima {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  justify-content: center;
   gap: 0.7rem;
+  height: 100%;
+}
+.clima > * {
+  flex-shrink: 0;
 }
 .clima-empty {
   color: var(--muted, #8b95a3);
@@ -10,14 +14,29 @@
   margin: auto;
 }
 
+/* ---- linhas de 2 colunas (quebram em 1 col em painel estreito) --------- */
+.clima-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.5rem 1.2rem;
+  align-items: start;
+}
+.clima-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
 /* ---- topo: agora ------------------------------------------------------- */
 .clima-top {
   display: flex;
   align-items: center;
   gap: 0.9rem;
+  min-width: 0;
 }
 .clima-emoji {
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
   line-height: 1;
 }
 .clima-main {
@@ -25,7 +44,7 @@
   min-width: 0;
 }
 .clima-temp {
-  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -37,11 +56,11 @@
   margin-left: 2px;
 }
 .clima-cond {
-  font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+  font-size: clamp(0.85rem, 1.6vw, 1.1rem);
   color: var(--accent, #5ac8fa);
 }
 .clima-loc {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--muted, #8b95a3);
   white-space: nowrap;
   overflow: hidden;
@@ -49,27 +68,22 @@
 }
 .clima-side {
   text-align: right;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted, #8b95a3);
-  line-height: 1.6;
+  line-height: 1.55;
 }
 .clima-side b {
   color: var(--fg, #e8ecf1);
   font-weight: 600;
 }
 
-/* ---- seções com título ---------------------------------------------------- */
-.clima-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
+/* ---- título de seção -------------------------------------------------- */
 .clima-section-title {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -86,27 +100,44 @@
 .clima-chart-empty {
   font-size: 0.8rem;
   color: var(--muted, #8b95a3);
-  padding: 0.4rem 0;
+  padding: 0.6rem 0;
 }
 
-/* ---- gráficos SVG ------------------------------------------------------- */
+/* ---- gráficos SVG ---------------------------------------------------- */
 .clima-chart {
   width: 100%;
   height: auto;
-  max-height: 150px;
   display: block;
   overflow: visible;
+}
+.clima-chart--temp {
+  aspect-ratio: 600 / 200;
+}
+.clima-chart--precip {
+  aspect-ratio: 600 / 140;
+}
+.clima-c-axis {
+  stroke: var(--panel-border, #262d38);
+  stroke-width: 1;
 }
 .clima-c-line {
   fill: none;
   stroke: var(--accent, #5ac8fa);
-  stroke-width: 2;
+  stroke-width: 2.5;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 .clima-c-area {
   fill: url(#clima-temp-fill);
   stroke: none;
+}
+.clima-c-stop0 {
+  stop-color: var(--accent, #5ac8fa);
+  stop-opacity: 0.35;
+}
+.clima-c-stop1 {
+  stop-color: var(--accent, #5ac8fa);
+  stop-opacity: 0;
 }
 .clima-c-nowline {
   stroke: var(--muted, #8b95a3);
@@ -131,13 +162,13 @@
 }
 .clima-c-vlabel {
   fill: var(--fg, #e8ecf1);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   text-anchor: middle;
 }
 .clima-c-tick {
   fill: var(--muted, #8b95a3);
-  font-size: 9px;
+  font-size: 11px;
   text-anchor: middle;
 }
 .clima-p-bar {
@@ -152,15 +183,15 @@
 .clima-days {
   display: flex;
   flex-direction: column;
-  gap: 0.32rem;
+  gap: 0.3rem;
   padding-top: 0.15rem;
 }
 .clima-day {
   display: grid;
-  grid-template-columns: 3.2rem 1.4rem 3.2rem 2rem 1fr 2rem;
+  grid-template-columns: 2.6rem 1.3rem 2.9rem 1.8rem 1fr 1.8rem;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
+  gap: 0.4rem;
+  font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
 }
 .clima-day-dow {
@@ -171,7 +202,7 @@
   text-align: center;
 }
 .clima-day-pop {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--accent, #5ac8fa);
   text-align: right;
 }
@@ -197,13 +228,12 @@
   background: linear-gradient(90deg, #5ac8fa, #9be15d 55%, #ff9f45);
 }
 
-/* ---- rodapé ----------------------------------------------------------- */
+/* ---- rodapé ---------------------------------------------------------- */
 .clima-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem 0.9rem;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted, #8b95a3);
-  margin-top: auto;
-  padding-top: 0.2rem;
+  padding-top: 0.1rem;
 }
