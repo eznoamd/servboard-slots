@@ -94,19 +94,42 @@ export async function refresh(ctx) {
     latitude: String(loc.latitude),
     longitude: String(loc.longitude),
     current: 'temperature_2m,apparent_temperature,relative_humidity_2m,is_day,weather_code,wind_speed_10m,wind_direction_10m,precipitation',
-    hourly: 'temperature_2m,precipitation_probability,weather_code',
-    daily: 'temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,precipitation_probability_max',
+    hourly: 'temperature_2m,precipitation_probability,precipitation,weather_code',
+    daily: 'temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,precipitation_probability_max,precipitation_sum',
     timezone: 'auto',
-    forecast_days: '1',
+    forecast_days: '7',
   });
   const fc = await getJson(`${FORECAST_URL}?${q}`);
 
   const cur = fc.current;
-  const hours = (fc.hourly?.time || []).map((t, i) => ({
-    time: t,
-    hour: Number(t.slice(11, 13)),
-    temp: fc.hourly.temperature_2m?.[i] ?? null,
-    rain: fc.hourly.precipitation_probability?.[i] ?? null,
+
+  // janela de 24 h a partir da hora atual (local do fuso resolvido)
+  const times = fc.hourly?.time || [];
+  const curKey = (cur?.time || '').slice(0, 13); // "YYYY-MM-DDTHH"
+  let start = times.findIndex((t) => t.slice(0, 13) === curKey);
+  if (start < 0) start = 0;
+  const at = (arr, i) => (Array.isArray(arr) ? arr[start + i] : undefined);
+  const hourly = [];
+  for (let i = 0; i < 24 && start + i < times.length; i++) {
+    const t = times[start + i];
+    hourly.push({
+      time: t,
+      hour: Number(t.slice(11, 13)),
+      temp: at(fc.hourly.temperature_2m, i) ?? null,
+      pop: at(fc.hourly.precipitation_probability, i) ?? null,
+      precip: at(fc.hourly.precipitation, i) ?? null,
+      ...describeWeather(at(fc.hourly.weather_code, i)),
+    });
+  }
+
+  const d = fc.daily || {};
+  const daily = (d.time || []).map((date, i) => ({
+    date,
+    max: d.temperature_2m_max?.[i] ?? null,
+    min: d.temperature_2m_min?.[i] ?? null,
+    pop: d.precipitation_probability_max?.[i] ?? null,
+    precipSum: d.precipitation_sum?.[i] ?? null,
+    ...describeWeather(d.weather_code?.[i]),
   }));
 
   const label = ctx.settings?.label
@@ -126,6 +149,7 @@ export async function refresh(ctx) {
     units: {
       temp: fc.current_units?.temperature_2m || '°C',
       wind: fc.current_units?.wind_speed_10m || 'km/h',
+      precip: fc.hourly_units?.precipitation || 'mm',
     },
     now: {
       temp: cur.temperature_2m,
@@ -137,14 +161,15 @@ export async function refresh(ctx) {
       ...describeWeather(cur.weather_code),
     },
     today: {
-      max: fc.daily?.temperature_2m_max?.[0] ?? null,
-      min: fc.daily?.temperature_2m_min?.[0] ?? null,
-      rainChance: fc.daily?.precipitation_probability_max?.[0] ?? null,
-      sunrise: fc.daily?.sunrise?.[0] ?? null,
-      sunset: fc.daily?.sunset?.[0] ?? null,
-      ...describeWeather(fc.daily?.weather_code?.[0]),
-      hourly: hours,
+      max: d.temperature_2m_max?.[0] ?? null,
+      min: d.temperature_2m_min?.[0] ?? null,
+      rainChance: d.precipitation_probability_max?.[0] ?? null,
+      sunrise: d.sunrise?.[0] ?? null,
+      sunset: d.sunset?.[0] ?? null,
+      ...describeWeather(d.weather_code?.[0]),
     },
+    hourly,
+    daily,
     fetchedAt: ctx.now.toISOString(),
   };
 }

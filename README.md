@@ -6,7 +6,7 @@ Mantidos fora do repo da base — atualizar a base nunca conflita com estes.
 ```
 slots/
   relogio/   hora, dia, dia da semana, mês/ano, semana do ano   (span 1)
-  clima/     local + temperatura agora e ao longo do dia         (span 2)  — Open-Meteo
+  clima/     agora + gráfico de temperatura 24 h, precipitação e próximos dias  (span 2)  — Open-Meteo
   energia/   consumo de energia do servidor (W, kWh, custo)      (span 1)  — tomada / RAPL / IPMI / estimativa
 ```
 
