@@ -1,0 +1,6 @@
+{
+  "id": "todos",
+  "title": "A fazer",
+  "span": 1,
+  "refreshInterval": "1m"
+}

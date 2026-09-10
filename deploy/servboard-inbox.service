@@ -1,0 +1,34 @@
+# Serviço user do inbox (provas/todos). Instala em ~/.config/systemd/user/
+#
+#   mkdir -p ~/.config/systemd/user
+#   cp deploy/servboard-inbox.service ~/.config/systemd/user/
+#   # ajuste WorkingDirectory abaixo se o repo não estiver nesse caminho
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now servboard-inbox
+#   loginctl enable-linger $USER      # pra rodar sem sessão aberta
+#
+# O token: crie data/inbox.env com  SERVBOARD_INBOX_TOKEN=...  (chmod 600),
+# ou deixe o serviço gerar data/inbox-token na 1ª subida e leia com:
+#   npm run inbox:token
+
+[Unit]
+Description=servBoard inbox (provas/todos)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/projs/servboard-slots
+ExecStart=/usr/bin/env node inbox/server.js
+EnvironmentFile=-%h/projs/servboard-slots/data/inbox.env
+Environment=SERVBOARD_INBOX_HOST=0.0.0.0
+Environment=SERVBOARD_INBOX_PORT=4871
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=%h/projs/servboard-slots/data
+
+[Install]
+WantedBy=default.target

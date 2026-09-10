@@ -1,3 +1,6 @@
 node_modules/
 *.log
 .DS_Store
+
+# dados locais do inbox (provas/todos, token) — nunca versionar
+/data/

@@ -1,0 +1,15 @@
+{
+  "name": "servboard-slots",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Slots pessoais + serviço inbox (provas/todos) para a dashboard servBoard",
+  "scripts": {
+    "inbox": "node inbox/server.js",
+    "inbox:token": "node inbox/server.js --print-token",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

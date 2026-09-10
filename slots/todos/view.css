@@ -1,0 +1,112 @@
+.td {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  min-height: 0;
+}
+.td--empty {
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted, #8b95a3);
+  text-align: center;
+}
+.td-empty-hint {
+  font-size: 0.72rem;
+  background: var(--panel-border, #262d38);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.td-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.td-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent, #5ac8fa) 16%, transparent);
+  color: var(--accent, #5ac8fa);
+  white-space: nowrap;
+}
+.td-tag--atra {
+  background: color-mix(in srgb, var(--danger, #ff6b6b) 20%, transparent);
+  color: var(--danger, #ff6b6b);
+}
+.td-tag--mut {
+  background: var(--panel-border, #262d38);
+  color: var(--muted, #8b95a3);
+}
+
+.td-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  overflow: auto;
+  min-height: 0;
+}
+.td-item {
+  display: grid;
+  grid-template-columns: 1.1rem 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.22rem 0;
+  font-size: 0.88rem;
+}
+.td-box {
+  color: var(--muted, #8b95a3);
+  font-size: 1rem;
+  line-height: 1;
+}
+.td-txt {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.td-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  background: var(--muted, #8b95a3);
+}
+.td-alta { background: var(--danger, #ff6b6b); }
+.td-media { background: #e3b341; }
+.td-baixa { background: #3fb950; }
+
+.td-prazo {
+  font-size: 0.74rem;
+  color: var(--muted, #8b95a3);
+  white-space: nowrap;
+}
+.td-late .td-box,
+.td-late .td-prazo {
+  color: var(--danger, #ff6b6b);
+}
+
+.td-done {
+  opacity: 0.5;
+}
+.td-done .td-txt {
+  text-decoration: line-through;
+}
+.td-done .td-box {
+  color: #3fb950;
+}
+
+.td-more {
+  font-size: 0.72rem;
+  color: var(--muted, #8b95a3);
+  text-align: center;
+}
